@@ -2,13 +2,19 @@ import eslint from '@eslint/js';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import importPlugin from 'eslint-plugin-import';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
-export default tseslint.config(
-  eslint.configs.recommended,
-  tseslint.configs.recommendedTypeChecked,
+export default defineConfig(
+  globalIgnores(['dist', 'generated']),
   {
-    files: ['**/*.{ts,tsx,mts}'],
     extends: [
+      eslint.configs.recommended,
+    ]
+  },
+  {
+    files: ['**/*.{ts,mts}'],
+    extends: [
+      tseslint.configs.recommended,
       importPlugin.flatConfigs.recommended,
       importPlugin.flatConfigs.typescript,
     ],

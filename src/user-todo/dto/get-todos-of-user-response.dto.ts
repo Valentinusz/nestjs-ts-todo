@@ -1,10 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-
-export class TodoOfUserDto {
-  @ApiProperty()
-  text: string;
-}
+import { TodoOfUserDto } from '@/user-todo/dto/todo-of-user.dto';
 
 export class GetTodosOfUserResponseDto {
+  @ApiProperty({ type: [TodoOfUserDto] })
   data: TodoOfUserDto[];
 }

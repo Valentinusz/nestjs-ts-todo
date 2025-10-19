@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE `Todo` (
+    `id` VARCHAR(26) NOT NULL,
+    `title` VARCHAR(1023) NOT NULL,
+    `details` VARCHAR(4095) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

@@ -1,11 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { Todo } from '@generated/prisma';
+import { PrismaService } from '@/persistence/prisma.service';
+import { GetTodosOfUserResponseDto } from '@/user-todo/dto/get-todos-of-user-response.dto';
 
 @Injectable()
 export class UserTodoService {
-  private todos: Todo[];
+  constructor(private readonly prismaService: PrismaService) {}
 
-  findAll() {
-    return this.todos;
+  async findTodosOfUser(): Promise<GetTodosOfUserResponseDto> {
+    const data = await this.prismaService.todo.findMany({
+      select: { id: true, title: true, details: true },
+    });
+
+    return {
+      data,
+    };
   }
 }
