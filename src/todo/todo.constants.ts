@@ -1,0 +1,2 @@
+export const TODO_TITLE_MAX_LENGTH = 1023;
+export const TODO_DETAILS_MAX_LENGTH = 4095;
