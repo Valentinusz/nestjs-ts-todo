@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { CreateUserRequestDto } from '@/user/dto/create-user-request.dto';
 import { CreateUserResponseDto } from '@/user/dto/create-user-response.dto';
 import { UserDto } from '@/user/dto/user.dto';
@@ -10,7 +10,10 @@ export class UserController {
   }
 
   @Get(':userId')
-  @ApiOkResponse({type: UserDto})
+  @ApiOperation({
+    summary: 'Get user by id'
+  })
+  @ApiOkResponse({ type: UserDto })
   async getUser(
     @Param('userId') userId: string
   ): Promise<UserDto> {
