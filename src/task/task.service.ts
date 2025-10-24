@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/persistence/prisma.service';
-import { CreateTodosRequestDto } from '@/todo/dto/create-todos-request.dto';
-import { CreateTodosResponseDto } from '@/todo/dto/create-todos-response.dto';
+import { CreateTasksRequestDto } from '@/task/dto/create-tasks-request.dto';
+import { CreateTasksResponseDto } from '@/task/dto/create-tasks-response.dto';
 import { Prisma } from '@generated/prisma';
 
 @Injectable()
-export class TodoService {
+export class TaskService {
   constructor(private prismaService: PrismaService) {}
 
   async createTodos(
-    req: CreateTodosRequestDto,
-  ): Promise<CreateTodosResponseDto> {
+    req: CreateTasksRequestDto,
+  ): Promise<CreateTasksResponseDto> {
     const data: Prisma.TodoCreateManyArgs['data'] = req.todos.map(
       ({ title, details }) => ({
         id: this.prismaService.getUlid(),

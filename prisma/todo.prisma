@@ -1,6 +1,0 @@
-model Todo {
-  id        String   @id @db.VarChar(26)
-  title     String   @db.VarChar(1023)
-  details   String   @db.VarChar(4095)
-  createdAt DateTime @default(now())
-}

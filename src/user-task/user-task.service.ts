@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@/persistence/prisma.service';
-import { GetTodosOfUserResponseDto } from '@/user-todo/dto/get-todos-of-user-response.dto';
+import { GetTasksOfUserResponseDto } from '@/user-task/dto/get-tasks-of-user-response.dto';
 
 @Injectable()
-export class UserTodoService {
+export class UserTaskService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findTodosOfUser(): Promise<GetTodosOfUserResponseDto> {
+  async findTodosOfUser(): Promise<GetTasksOfUserResponseDto> {
     const data = await this.prismaService.todo.findMany({
       select: { id: true, title: true, details: true },
     });
