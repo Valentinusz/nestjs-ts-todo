@@ -11,23 +11,24 @@ export class TaskService {
   async createTodos(
     req: CreateTasksRequestDto,
   ): Promise<CreateTasksResponseDto> {
-    const data: Prisma.TodoCreateManyArgs['data'] = req.todos.map(
+    const data: Prisma.TaskCreateManyArgs['data'] = req.tasks.map(
       ({ title, details }) => ({
         id: this.prismaService.getUlid(),
         title,
         details,
+        createdById: "100"
       }),
     );
 
-    await this.prismaService.todo.createMany({
+    await this.prismaService.task.createMany({
       data,
     });
 
     return {
-      todos: data.map(({ id, title, details }) => ({
+      tasks: data.map(({ id, title, details }) => ({
         id,
-        title,
-        details,
+        title: title ?? undefined,
+        details: details ?? undefined,
       })),
     };
   }

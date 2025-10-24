@@ -1,11 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { createdAtApiPropertyOptions } from '@/audit/audit-openapi.constants';
-import { USER_ID_API_PROPERTY_OPTIONS } from '@/user/user-openapi.constants';
+import { CREATED_AT_API_PROPERTY_OPTIONS } from '@/audit/audit.openapi.constants';
 
 export class UserDto {
-  @ApiProperty(USER_ID_API_PROPERTY_OPTIONS)
-  id: string;
-
-  @ApiProperty(createdAtApiPropertyOptions)
+  @ApiProperty(CREATED_AT_API_PROPERTY_OPTIONS)
   createdAt: Date;
 }

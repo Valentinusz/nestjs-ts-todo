@@ -7,7 +7,7 @@ export class UserTaskService {
   constructor(private readonly prismaService: PrismaService) {}
 
   async findTodosOfUser(): Promise<GetTasksOfUserResponseDto> {
-    const data = await this.prismaService.todo.findMany({
+    const data = await this.prismaService.task.findMany({
       select: { id: true, title: true, details: true },
     });
 

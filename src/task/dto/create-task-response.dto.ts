@@ -10,8 +10,8 @@ export class CreateTaskResponseDto {
   id: string;
 
   @ApiProperty(TASK_TITLE_API_PROPERTY_OPTIONS)
-  title: string;
+  title?: string;
 
   @ApiProperty(TASK_DETAILS_API_PROPERTY_OPTIONS)
-  details: string;
+  details?: string;
 }

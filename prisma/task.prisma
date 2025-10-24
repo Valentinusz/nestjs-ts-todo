@@ -1,9 +1,10 @@
 model Task {
-  id             String          @id @db.VarChar(26)
-  title          String          @db.VarChar(1023)
-  details        String          @db.VarChar(4095)
-  taskCollection TaskCollection?
-  createdAt      DateTime        @default(now())
-  createdBy      User            @relation(fields: [createdById], references: [id])
-  createdById    String          @db.VarChar(26)
+  id               String          @id @db.VarChar(26)
+  title            String?         @db.VarChar(1023)
+  details          String?         @db.VarChar(4095)
+  taskCollection   TaskCollection? @relation(fields: [taskCollectionId], references: [id])
+  taskCollectionId String?         @db.VarChar(26)
+  createdAt        DateTime        @default(now())
+  createdBy        User            @relation(fields: [createdById], references: [id])
+  createdById      String          @db.VarChar(26)
 }

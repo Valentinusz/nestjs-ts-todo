@@ -5,5 +5,5 @@ import { CreateTaskRequestDto } from '@/task/dto/create-task-request.dto';
 export class CreateTasksRequestDto {
   @ApiProperty({type: [CreateTaskRequestDto]})
   @ArrayNotEmpty()
-  todos: CreateTaskRequestDto[];
+  tasks: CreateTaskRequestDto[];
 }

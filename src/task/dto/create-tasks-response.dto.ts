@@ -3,5 +3,5 @@ import { CreateTaskResponseDto } from '@/task/dto/create-task-response.dto';
 
 export class CreateTasksResponseDto {
   @ApiProperty({ type: [CreateTaskResponseDto] })
-  todos: CreateTaskResponseDto[];
+  tasks: CreateTaskResponseDto[];
 }

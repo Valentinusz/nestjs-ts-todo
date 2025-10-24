@@ -1,5 +1,5 @@
 import type { ApiPropertyOptions } from '@nestjs/swagger';
 
-export const createdAtApiPropertyOptions = {
+export const CREATED_AT_API_PROPERTY_OPTIONS = {
   description: 'Time the resource as created at'
-} satisfies ApiPropertyOptions;
+} as const satisfies ApiPropertyOptions;

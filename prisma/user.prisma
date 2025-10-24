@@ -3,4 +3,5 @@ model User {
   tasks Task[]
   taskCollections TaskCollection[]
   createdAt DateTime @default(now())
+  deletedAt DateTime?
 }
