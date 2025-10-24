@@ -1,14 +1,13 @@
 import type { ApiParamOptions, ApiPropertyOptions } from '@nestjs/swagger';
 import { ID_API_PROPERTY_OPTIONS } from '@/id/id.openapi.constants';
 import { TODO_TITLE_MAX_LENGTH } from '@/task/task.constants';
-import { TASK_ID_PARAM_NAME } from '@/task/task.routing.constants';
 
 export const TASK_ID_API_PROPERTY_OPTIONS = {
   ...ID_API_PROPERTY_OPTIONS,
 } as const satisfies ApiPropertyOptions;
 
 export const TASK_ID_API_PARAM_OPTIONS = {
-  name: TASK_ID_PARAM_NAME,
+  name: 'taskId',
   ...TASK_ID_API_PROPERTY_OPTIONS,
 } as const satisfies ApiParamOptions;
 

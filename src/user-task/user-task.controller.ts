@@ -10,7 +10,7 @@ export class UserTaskController {
 
   @Get()
   @ApiOkResponse({ type: CreateTasksResponseDto })
-  getTodosOfUser(
+  getTasksOfUser(
     @Param('userId') userId: string,
   ): Promise<GetTasksOfUserResponseDto> {
     return this.userTodoService.findTodosOfUser();

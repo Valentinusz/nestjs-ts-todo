@@ -13,13 +13,8 @@ import { CreateTaskCollectionRequestDto } from '@/task-collection/dto/create-tas
 import { CreateTaskCollectionResponseDto } from '@/task-collection/dto/create-task-collection-response.dto';
 import { UpdateTaskCollectionRequestDto } from '@/task-collection/dto/update-task-collection-request.dto';
 import { UpdateTaskCollectionResponseDto } from '@/task-collection/dto/update-task-collection-response.dto';
-import {
-  TASK_COLLECTION_ID_PARAM_NAME,
-  TASK_COLLECTION_ID_PATH_PARAM,
-  TASK_COLLECTION_RESOURCE_NAME,
-} from '@/task-collection/task-collection.routing.constants';
 
-@Controller(TASK_COLLECTION_RESOURCE_NAME)
+@Controller('task-collections')
 export class TaskCollectionController {
   constructor() {}
 
@@ -32,18 +27,18 @@ export class TaskCollectionController {
     return {};
   }
 
-  @Put()
+  @Put(':taskCollectionId')
   async updateTaskCollection(
-    @Param(TASK_COLLECTION_ID_PARAM_NAME) taskCollectionId: string,
+    @Param('taskCollectionId') taskCollectionId: string,
     @Body() body: UpdateTaskCollectionRequestDto,
   ): Promise<UpdateTaskCollectionResponseDto> {
     return {};
   }
 
-  @Delete(TASK_COLLECTION_ID_PATH_PARAM)
+  @Delete(':taskCollectionId')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse()
   async deleteTaskCollection(
-    @Param(TASK_COLLECTION_ID_PARAM_NAME) taskCollectionId: string,
+    @Param('taskCollectionId') taskCollectionId: string,
   ) {}
 }

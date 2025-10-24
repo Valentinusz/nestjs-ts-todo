@@ -19,10 +19,6 @@ import { CreateTasksResponseDto } from '@/task/dto/create-tasks-response.dto';
 import { UpdateTaskRequestDto } from '@/task/dto/update-task-request.dto';
 import { UpdateTaskResponseDto } from '@/task/dto/update-task-response.dto';
 import { TASK_ID_API_PARAM_OPTIONS } from '@/task/task.openapi.constants';
-import {
-  TASK_ID_PARAM_NAME,
-  TASK_ID_PATH_PARAM,
-} from '@/task/task.routing.constants';
 import { TaskService } from '@/task/task.service';
 
 @Controller('tasks')
@@ -38,19 +34,19 @@ export class TaskController {
     return this.todoService.createTodos(body);
   }
 
-  @Put(TASK_ID_PATH_PARAM)
+  @Put(':taskId')
   @ApiOkResponse({ type: UpdateTaskResponseDto })
   @ApiParam(TASK_ID_API_PARAM_OPTIONS)
   async updateTask(
-    @Param(TASK_ID_PARAM_NAME) taskId: string,
+    @Param('taskId') taskId: string,
     @Body() body: UpdateTaskRequestDto,
   ): Promise<UpdateTaskResponseDto> {
     return {};
   }
 
-  @Delete(TASK_ID_PATH_PARAM)
+  @Delete(':taskId')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse()
   @ApiParam(TASK_ID_API_PARAM_OPTIONS)
-  async deleteTask(@Param(TASK_ID_PARAM_NAME) taskId: string) {}
+  async deleteTask(@Param('taskId') taskId: string) {}
 }
