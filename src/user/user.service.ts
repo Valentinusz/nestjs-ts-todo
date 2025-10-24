@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ulid } from 'ulid';
 import { PrismaService } from '@/persistence/prisma.service';
 import { CreateUserResponseDto } from '@/user/dto/create-user-response.dto';
 import { UserDto } from '@/user/dto/user.dto';
+import { UserNotFoundException } from '@/user/exception/user-not-found.exception';
 
 @Injectable()
 export class UserService {
@@ -19,7 +20,7 @@ export class UserService {
     });
 
     if (user === null) {
-      throw new NotFoundException();
+      throw new UserNotFoundException(userId);
     }
 
     return user;
@@ -28,18 +29,12 @@ export class UserService {
   async createUser(): Promise<CreateUserResponseDto> {
     const id = ulid();
 
-    this.prismaService.user.create({
+    const { createdAt } = await this.prismaService.user.create({
       data: {
         id,
       },
-    });
-
-    const { createdAt } = await this.prismaService.user.findFirstOrThrow({
       select: {
         createdAt: true,
-      },
-      where: {
-        id,
       },
     });
 
@@ -50,24 +45,32 @@ export class UserService {
   }
 
   async markUserAsNotDeleted(userId: string): Promise<void> {
-    this.prismaService.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        deletedAt: null,
-      },
-    });
+    try {
+      await this.prismaService.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          deletedAt: null,
+        },
+      });
+    } catch {
+      throw new UserNotFoundException(userId);
+    }
   }
 
   async markUserAsDeleted(userId: string): Promise<void> {
-    this.prismaService.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        deletedAt: new Date(),
-      },
-    });
+    try {
+      await this.prismaService.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          deletedAt: new Date(),
+        },
+      });
+    } catch {
+      throw new UserNotFoundException(userId);
+    }
   }
 }
