@@ -17,7 +17,7 @@ import {
   ApiOperation,
   ApiParam,
 } from '@nestjs/swagger';
-import { ErrorMessageSchema } from '@/error/error-message.schema';
+import { ErrorResponseDto } from '@/error/error-response.dto';
 import { CreateUserResponseDto } from '@/user/dto/create-user-response.dto';
 import { UserDto } from '@/user/dto/user.dto';
 import {
@@ -62,7 +62,7 @@ export class UserController {
   @ApiNotFoundResponse(USER_NOT_FOUND_API_RESPONSE_OPTIONS)
   @ApiConflictResponse({
     description: 'User is not marked for deletion',
-    type: ErrorMessageSchema,
+    type: ErrorResponseDto,
   })
   async undeleteUser(@Param('userId') userId: string) {
     await this.userService.markUserAsNotDeleted(userId);
@@ -80,7 +80,7 @@ export class UserController {
   @ApiNotFoundResponse(USER_NOT_FOUND_API_RESPONSE_OPTIONS)
   @ApiConflictResponse({
     description: 'User is already marked for deletion',
-    type: ErrorMessageSchema,
+    type: ErrorResponseDto,
   })
   async deleteUser(@Param('userId') userId: string) {
     await this.userService.markUserAsDeleted(userId);

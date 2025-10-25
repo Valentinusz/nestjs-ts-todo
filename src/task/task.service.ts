@@ -8,7 +8,7 @@ import { Prisma } from '@generated/prisma';
 export class TaskService {
   constructor(private prismaService: PrismaService) {}
 
-  async createTodos(
+  async createTasks(
     req: CreateTasksRequestDto,
   ): Promise<CreateTasksResponseDto> {
     const data: Prisma.TaskCreateManyArgs['data'] = req.tasks.map(

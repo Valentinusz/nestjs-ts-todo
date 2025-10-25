@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class ErrorMessageSchema {
+export class ErrorResponseDto {
   @ApiProperty({
     description: 'Detailed error message',
   })
