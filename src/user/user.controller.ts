@@ -36,6 +36,7 @@ export class UserController {
   })
   @ApiParam(USER_ID_API_PARAM_OPTIONS)
   @ApiOkResponse({ type: UserDto })
+  @ApiNotFoundResponse(USER_NOT_FOUND_API_RESPONSE_OPTIONS)
   async getUser(@Param('userId') userId: string): Promise<UserDto> {
     return this.userService.getUser(userId);
   }

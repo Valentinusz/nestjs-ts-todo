@@ -5,15 +5,20 @@ import { RequestLoggerInterceptor } from '@/interceptors/request-logger.intercep
 import { PrismaModule } from '@/persistence/prisma.module';
 import { TaskModule } from '@/task/task.module';
 import { TaskCollectionModule } from '@/task-collection/task-collection.module';
-import { UsersModule } from '@/user/user.module';
+import { UserModule } from '@/user/user.module';
 import { UserTaskModule } from '@/user-task/user-task.module';
 import { UserTaskCollectionModule } from '@/user-task-collection/user-task-collection.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), TaskCollectionModule, TaskModule, UsersModule, UserTaskModule, UserTaskCollectionModule, PrismaModule],
-  providers: [
-    { provide: APP_INTERCEPTOR, useClass: RequestLoggerInterceptor },
+  imports: [
+    ConfigModule.forRoot(),
+    PrismaModule,
+    TaskModule,
+    TaskCollectionModule,
+    UserModule,
+    UserTaskModule,
+    UserTaskCollectionModule,
   ],
+  providers: [{ provide: APP_INTERCEPTOR, useClass: RequestLoggerInterceptor }],
 })
-export class AppModule {
-}
+export class AppModule {}
