@@ -17,7 +17,7 @@ import {
   ApiOperation,
   ApiParam,
 } from '@nestjs/swagger';
-import { ErrorResponseDto } from '@/error/error-response.dto';
+import { ErrorResponseDto } from '@/openapi/error-response.dto';
 import { CreateUserResponseDto } from '@/user/dto/create-user-response.dto';
 import { UserDto } from '@/user/dto/user.dto';
 import {

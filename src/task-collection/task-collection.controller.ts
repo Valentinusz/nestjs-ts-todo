@@ -12,6 +12,7 @@ import {
   ApiCreatedResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
+  ApiOperation,
 } from '@nestjs/swagger';
 import { CreateTaskCollectionRequestDto } from '@/task-collection/dto/create-task-collection-request.dto';
 import { CreateTaskCollectionResponseDto } from '@/task-collection/dto/create-task-collection-response.dto';
@@ -26,6 +27,9 @@ export class TaskCollectionController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({
+    description: 'Create a new task collection',
+  })
   @ApiCreatedResponse()
   @ApiNotFoundResponse(USER_NOT_FOUND_API_RESPONSE_OPTIONS)
   async createTaskCollection(

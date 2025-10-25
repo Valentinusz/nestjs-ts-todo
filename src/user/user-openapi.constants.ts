@@ -7,7 +7,7 @@ import {
   ID_API_PARAM_OPTIONS,
   ID_API_PROPERTY_OPTIONS,
 } from '@/id/id.openapi.constants';
-import { ErrorResponseDto } from '@/error/error-response.dto';
+import { ErrorResponseDto } from '@/openapi/error-response.dto';
 
 export const USER_API_DESCRIPTION_EXAMPLE = 'Id of the user';
 
