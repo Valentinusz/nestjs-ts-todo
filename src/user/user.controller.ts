@@ -53,12 +53,16 @@ export class UserController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Cancel the ongoing deletion of a user',
-    description: 'Does nothing if the user is not being deleted',
   })
   @ApiParam(USER_ID_API_PARAM_OPTIONS)
-  @ApiNoContentResponse()
+  @ApiNoContentResponse({
+    description: 'Deletion cancelled',
+  })
   @ApiNotFoundResponse(USER_NOT_FOUND_API_RESPONSE_OPTIONS)
-  @ApiConflictResponse()
+  @ApiConflictResponse({
+    description: 'User is not marked for deletion',
+    type: ErrorMessageSchema,
+  })
   async undeleteUser(@Param('userId') userId: string) {
     await this.userService.markUserAsNotDeleted(userId);
   }
@@ -67,7 +71,6 @@ export class UserController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Mark a user for deletion',
-    description: 'Does nothing if the user is already being deleted',
   })
   @ApiParam(USER_ID_API_PARAM_OPTIONS)
   @ApiNoContentResponse({

@@ -5,6 +5,7 @@ import { PrismaService } from '@/persistence/prisma.service';
 import { CreateUserResponseDto } from '@/user/dto/create-user-response.dto';
 import { UserDto } from '@/user/dto/user.dto';
 import { UserNotFoundException } from '@/user/exception/user-not-found.exception';
+import { User } from '@generated/prisma';
 
 @Injectable()
 export class UserService {
@@ -50,29 +51,32 @@ export class UserService {
   }
 
   async markUserAsNotDeleted(userId: string): Promise<void> {
-    try {
-      await this.prismaService.user.updateMany({
-        where: {
-          id: userId,
-        },
-        data: {
-          deletedAt: null,
-        },
-      });
-    } catch {
+    const user = await this.getDeletedAtOnlyOfUser(userId);
+
+    if (user === null) {
       throw new UserNotFoundException(userId);
     }
-  }
 
-  async markUserAsDeleted(userId: string): Promise<void> {
-    const user = await this.prismaService.user.findFirst({
-      select: {
-        deletedAt: true,
-      },
+    const { deletedAt } = user;
+
+    if (deletedAt === null) {
+      throw new ConflictException(
+        `User with id ${userId} is not marked for deletion`,
+      );
+    }
+
+    await this.prismaService.user.updateMany({
       where: {
         id: userId,
       },
+      data: {
+        deletedAt: null,
+      },
     });
+  }
+
+  async markUserAsDeleted(userId: string): Promise<void> {
+    const user = await this.getDeletedAtOnlyOfUser(userId);
 
     if (user === null) {
       throw new UserNotFoundException(userId);
@@ -92,6 +96,19 @@ export class UserService {
       },
       data: {
         deletedAt: dayjs().add(30, 'days').toDate(),
+      },
+    });
+  }
+
+  async getDeletedAtOnlyOfUser(
+    userId: string,
+  ): Promise<{ deletedAt: User['deletedAt'] } | null> {
+    return this.prismaService.user.findFirst({
+      select: {
+        deletedAt: true,
+      },
+      where: {
+        id: userId,
       },
     });
   }
