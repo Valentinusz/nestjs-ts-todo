@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
+import dayjs from 'dayjs';
 import { ulid } from 'ulid';
 import { PrismaService } from '@/persistence/prisma.service';
 import { CreateUserResponseDto } from '@/user/dto/create-user-response.dto';
@@ -13,6 +14,7 @@ export class UserService {
     const user = await this.prismaService.user.findFirst({
       select: {
         createdAt: true,
+        deletedAt: true,
       },
       where: {
         id: userId,
@@ -23,7 +25,10 @@ export class UserService {
       throw new UserNotFoundException(userId);
     }
 
-    return user;
+    return {
+      createdAt: user.createdAt,
+      deletedAt: user.deletedAt ?? undefined,
+    };
   }
 
   async createUser(): Promise<CreateUserResponseDto> {
@@ -46,7 +51,7 @@ export class UserService {
 
   async markUserAsNotDeleted(userId: string): Promise<void> {
     try {
-      await this.prismaService.user.update({
+      await this.prismaService.user.updateMany({
         where: {
           id: userId,
         },
@@ -60,17 +65,34 @@ export class UserService {
   }
 
   async markUserAsDeleted(userId: string): Promise<void> {
-    try {
-      await this.prismaService.user.update({
-        where: {
-          id: userId,
-        },
-        data: {
-          deletedAt: new Date(),
-        },
-      });
-    } catch {
+    const user = await this.prismaService.user.findFirst({
+      select: {
+        deletedAt: true,
+      },
+      where: {
+        id: userId,
+      },
+    });
+
+    if (user === null) {
       throw new UserNotFoundException(userId);
     }
+
+    const { deletedAt } = user;
+
+    if (deletedAt !== null) {
+      throw new ConflictException(
+        `User with id ${userId} is already being deleted`,
+      );
+    }
+
+    await this.prismaService.user.updateMany({
+      where: {
+        id: userId,
+      },
+      data: {
+        deletedAt: dayjs().add(30, 'days').toDate(),
+      },
+    });
   }
 }

@@ -9,15 +9,21 @@ import {
   Post,
 } from '@nestjs/common';
 import {
+  ApiConflictResponse,
   ApiCreatedResponse,
   ApiNoContentResponse,
+  ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
 } from '@nestjs/swagger';
+import { ErrorMessageSchema } from '@/error/error-message.schema';
 import { CreateUserResponseDto } from '@/user/dto/create-user-response.dto';
 import { UserDto } from '@/user/dto/user.dto';
-import { USER_ID_API_PARAM_OPTIONS } from '@/user/user-openapi.constants';
+import {
+  USER_ID_API_PARAM_OPTIONS,
+  USER_NOT_FOUND_API_RESPONSE_OPTIONS,
+} from '@/user/user-openapi.constants';
 import { UserService } from '@/user/user.service';
 
 @Controller('users')
@@ -47,9 +53,12 @@ export class UserController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Cancel the ongoing deletion of a user',
+    description: 'Does nothing if the user is not being deleted',
   })
   @ApiParam(USER_ID_API_PARAM_OPTIONS)
   @ApiNoContentResponse()
+  @ApiNotFoundResponse(USER_NOT_FOUND_API_RESPONSE_OPTIONS)
+  @ApiConflictResponse()
   async undeleteUser(@Param('userId') userId: string) {
     await this.userService.markUserAsNotDeleted(userId);
   }
@@ -58,9 +67,17 @@ export class UserController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({
     summary: 'Mark a user for deletion',
+    description: 'Does nothing if the user is already being deleted',
   })
   @ApiParam(USER_ID_API_PARAM_OPTIONS)
-  @ApiNoContentResponse()
+  @ApiNoContentResponse({
+    description: 'User marked for deletion',
+  })
+  @ApiNotFoundResponse(USER_NOT_FOUND_API_RESPONSE_OPTIONS)
+  @ApiConflictResponse({
+    description: 'User is already marked for deletion',
+    type: ErrorMessageSchema,
+  })
   async deleteUser(@Param('userId') userId: string) {
     await this.userService.markUserAsDeleted(userId);
   }

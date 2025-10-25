@@ -1,14 +1,19 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { RequestLoggerInterceptor } from '@/interceptors/request-logger.interceptor';
 import { PrismaModule } from '@/persistence/prisma.module';
-import { TaskCollectionModule } from '@/task-collection/task-collection.module';
 import { TaskModule } from '@/task/task.module';
+import { TaskCollectionModule } from '@/task-collection/task-collection.module';
 import { UsersModule } from '@/user/user.module';
-import { UserTaskCollectionModule } from '@/user-task-collection/user-task-collection.module';
 import { UserTaskModule } from '@/user-task/user-task.module';
+import { UserTaskCollectionModule } from '@/user-task-collection/user-task-collection.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), TaskCollectionModule, TaskModule, UsersModule, UserTaskModule, UserTaskCollectionModule, PrismaModule]
+  imports: [ConfigModule.forRoot(), TaskCollectionModule, TaskModule, UsersModule, UserTaskModule, UserTaskCollectionModule, PrismaModule],
+  providers: [
+    { provide: APP_INTERCEPTOR, useClass: RequestLoggerInterceptor },
+  ],
 })
 export class AppModule {
 }
