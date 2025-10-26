@@ -13,6 +13,7 @@ import {
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOperation,
+  ApiParam,
 } from '@nestjs/swagger';
 import { CreateTaskCollectionRequestDto } from '@/task-collection/dto/create-task-collection-request.dto';
 import { CreateTaskCollectionResponseDto } from '@/task-collection/dto/create-task-collection-response.dto';
@@ -20,6 +21,7 @@ import { UpdateTaskCollectionRequestDto } from '@/task-collection/dto/update-tas
 import { UpdateTaskCollectionResponseDto } from '@/task-collection/dto/update-task-collection-response.dto';
 import { TaskCollectionService } from '@/task-collection/task-collection.service';
 import { USER_NOT_FOUND_API_RESPONSE_OPTIONS } from '@/user/user-openapi.constants';
+import { TASK_COLLECTION_ID_API_PARAM_OPTIONS } from '@/task-collection/task-collection.openapi.constants';
 
 @Controller('task-collections')
 export class TaskCollectionController {
@@ -38,6 +40,7 @@ export class TaskCollectionController {
   }
 
   @Put(':taskCollectionId')
+  @ApiParam(TASK_COLLECTION_ID_API_PARAM_OPTIONS)
   async updateTaskCollection(
     @Param('taskCollectionId') taskCollectionId: string,
     @Body() body: UpdateTaskCollectionRequestDto,

@@ -1,5 +1,5 @@
-import type { ApiPropertyOptions } from '@nestjs/swagger';
-import { ID_API_PROPERTY_OPTIONS } from '@/openapi/id.openapi.constants';
+import type { ApiParamOptions, ApiPropertyOptions } from '@nestjs/swagger';
+import { ID_API_PARAM_OPTIONS, ID_API_PROPERTY_OPTIONS } from '@/openapi/id.openapi.constants';
 import {
   TASK_COLLECTION_DETAILS_MAX_LENGTH,
   TASK_COLLECTION_TITLE_MAX_LENGTH,
@@ -9,6 +9,11 @@ export const TASK_COLLECTION_ID_API_PROPERTY_OPTIONS = {
   ...ID_API_PROPERTY_OPTIONS,
   description: 'Id of the task collection',
 } as const satisfies ApiPropertyOptions;
+
+export const TASK_COLLECTION_ID_API_PARAM_OPTIONS = {
+  ...ID_API_PARAM_OPTIONS,
+  name: 'taskCollectionId',
+} as const satisfies ApiParamOptions;
 
 export const TASK_COLLECTION_TITLE_API_PROPERTY_OPTIONS = {
   description: 'Name of the task collection',
