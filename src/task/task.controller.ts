@@ -27,7 +27,7 @@ import {
   TASK_NOT_FOUND_API_RESPONSE_OPTIONS,
 } from '@/task/task.openapi.constants';
 import { TaskService } from '@/task/task.service';
-import { VALIDATION_FAILED_API_RESPONSE_OPTIONS } from '@/openapi/decorator-options.constants';
+import { VALIDATION_FAILED_API_RESPONSE_OPTIONS } from '@/openapi/api-response-options.constants';
 
 @Controller('tasks')
 export class TaskController {

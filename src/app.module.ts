@@ -8,6 +8,7 @@ import { TaskCollectionModule } from '@/task-collection/task-collection.module';
 import { UserModule } from '@/user/user.module';
 import { UserTaskModule } from '@/user-task/user-task.module';
 import { UserTaskCollectionModule } from '@/user-task-collection/user-task-collection.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UserTaskCollectionModule } from '@/user-task-collection/user-task-colle
     UserModule,
     UserTaskModule,
     UserTaskCollectionModule,
+    AuthModule,
   ],
   providers: [{ provide: APP_INTERCEPTOR, useClass: RequestLoggerInterceptor }],
 })

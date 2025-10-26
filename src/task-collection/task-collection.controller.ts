@@ -30,7 +30,9 @@ export class TaskCollectionController {
   @ApiOperation({
     description: 'Create a new task collection',
   })
-  @ApiCreatedResponse()
+  @ApiCreatedResponse({
+    type: CreateTaskCollectionResponseDto,
+  })
   @ApiNotFoundResponse(USER_NOT_FOUND_API_RESPONSE_OPTIONS)
   async createTaskCollection(
     @Body() body: CreateTaskCollectionRequestDto,
