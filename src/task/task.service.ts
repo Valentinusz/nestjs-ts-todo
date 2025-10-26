@@ -16,7 +16,7 @@ export class TaskService {
         id: this.prismaService.getUlid(),
         title,
         details,
-        createdById: "100"
+        createdById: '100',
       }),
     );
 

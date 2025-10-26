@@ -37,8 +37,6 @@
     "@nestjs/config": "^4.0.2",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
-    "@swc/cli": "^0.7.8",
-    "@swc/core": "^1.13.5",
     "@types/node": "^22.10.7",
     "@types/supertest": "^6.0.2",
     "@typescript-eslint/parser": "^8.45.0",
@@ -55,7 +53,6 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0",
-    "unplugin-swc": "^1.5.7",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
   }

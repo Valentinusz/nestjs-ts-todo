@@ -11,12 +11,18 @@ import {
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
   ApiNoContentResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import {
+  NO_LOGIN_API_RESPONSE_OPTIONS,
+  VALIDATION_FAILED_API_RESPONSE_OPTIONS,
+} from '@/openapi/api-response-options.constants';
 import { ErrorResponseDto } from '@/openapi/error-response.dto';
 import { CreateTasksRequestDto } from '@/task/dto/create-tasks-request.dto';
 import { CreateTasksResponseDto } from '@/task/dto/create-tasks-response.dto';
@@ -27,7 +33,6 @@ import {
   TASK_NOT_FOUND_API_RESPONSE_OPTIONS,
 } from '@/task/task.openapi.constants';
 import { TaskService } from '@/task/task.service';
-import { VALIDATION_FAILED_API_RESPONSE_OPTIONS } from '@/openapi/api-response-options.constants';
 
 @Controller('tasks')
 export class TaskController {
@@ -36,10 +41,16 @@ export class TaskController {
   @Post()
   @HttpCode(201)
   @ApiOperation({
-    description: 'Create a list of tasks',
+    summary: 'Create a list of tasks',
   })
   @ApiCreatedResponse({ type: CreateTasksResponseDto })
   @ApiBadRequestResponse(VALIDATION_FAILED_API_RESPONSE_OPTIONS)
+  @ApiUnauthorizedResponse(NO_LOGIN_API_RESPONSE_OPTIONS)
+  @ApiForbiddenResponse({
+    type: ErrorResponseDto,
+    description:
+      'Current user cannot create task for one of the specific collections',
+  })
   createTodo(
     @Body() body: CreateTasksRequestDto,
   ): Promise<CreateTasksResponseDto> {
