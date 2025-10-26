@@ -3,8 +3,8 @@ import type {
   ApiPropertyOptions,
   ApiResponseOptions,
 } from '@nestjs/swagger';
-import { ID_API_PROPERTY_OPTIONS } from '@/id/id.openapi.constants';
 import { ErrorResponseDto } from '@/openapi/error-response.dto';
+import { ID_API_PROPERTY_OPTIONS } from '@/openapi/id.openapi.constants';
 import { TODO_TITLE_MAX_LENGTH } from '@/task/task.constants';
 
 export const TASK_ID_API_PROPERTY_OPTIONS = {

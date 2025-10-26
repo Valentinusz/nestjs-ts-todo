@@ -1,5 +1,5 @@
 import type { ApiPropertyOptions } from '@nestjs/swagger';
-import { ID_API_PROPERTY_OPTIONS } from '@/id/id.openapi.constants';
+import { ID_API_PROPERTY_OPTIONS } from '@/openapi/id.openapi.constants';
 import {
   TASK_COLLECTION_DETAILS_MAX_LENGTH,
   TASK_COLLECTION_TITLE_MAX_LENGTH,

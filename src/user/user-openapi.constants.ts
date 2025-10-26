@@ -3,11 +3,11 @@ import type {
   ApiPropertyOptions,
   ApiResponseOptions,
 } from '@nestjs/swagger';
+import { ErrorResponseDto } from '@/openapi/error-response.dto';
 import {
   ID_API_PARAM_OPTIONS,
   ID_API_PROPERTY_OPTIONS,
-} from '@/id/id.openapi.constants';
-import { ErrorResponseDto } from '@/openapi/error-response.dto';
+} from '@/openapi/id.openapi.constants';
 
 export const USER_API_DESCRIPTION_EXAMPLE = 'Id of the user';
 
@@ -24,5 +24,5 @@ export const USER_ID_API_PARAM_OPTIONS = {
 
 export const USER_NOT_FOUND_API_RESPONSE_OPTIONS = {
   description: 'User does not exist',
-  type: ErrorResponseDto
+  type: ErrorResponseDto,
 } as const satisfies ApiResponseOptions;
