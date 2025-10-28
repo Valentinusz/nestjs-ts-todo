@@ -16,6 +16,7 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiParam,
+  ApiSecurity,
 } from '@nestjs/swagger';
 import { ErrorResponseDto } from '@/openapi/error-response.dto';
 import { CreateUserResponseDto } from '@/user/dto/create-user-response.dto';
@@ -27,6 +28,7 @@ import {
 import { UserService } from '@/user/user.service';
 
 @Controller('users')
+@ApiSecurity('oauth2')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

@@ -22,13 +22,30 @@ async function bootstrap() {
     .setTitle('Tasks API')
     .setDescription('API for managing tasks (things to do)')
     .setVersion('0.1')
+    .addOAuth2({
+      type: 'oauth2',
+      flows: {
+        implicit: {
+          authorizationUrl:
+            'http://localhost:8080/realms/tasks-realm/protocol/openid-connect/auth',
+          tokenUrl:
+            'http://localhost:8080/realms/tasks-realm/protocol/openid-connect/token',
+          scopes: {},
+        },
+      },
+    })
     .build();
 
   const documentFactory = () =>
-    SwaggerModule.createDocument(app, config, {
-      operationIdFactory: (_, methodKey, version) =>
-        `${methodKey}${version ? version.replace(/^./, version[0].toUpperCase()) : ''}`,
-    });
+    SwaggerModule.createDocument(
+      app,
+      config,
+      {
+        operationIdFactory: (_, methodKey, version) =>
+          `${methodKey}${version ? version.replace(/^./, version[0].toUpperCase()) : ''}`,
+      },
+
+    );
 
   const swaggerPath = 'api';
   const jsonDocumentUrl = `${swaggerPath}-json`;
@@ -41,6 +58,10 @@ async function bootstrap() {
       displayOperationId: true,
       filter: true,
       urls: [{ name: 'JSON', url: jsonDocumentUrl }],
+      oauth2RedirectUrl: 'http://localhost:3000/api/oauth2-redirect.html',
+      initOAuth: {
+        clientId: 'tasks-backend-swagger',
+      },
     },
   });
 

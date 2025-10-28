@@ -1,7 +1,9 @@
 model User {
-  id        String   @id @db.VarChar(26)
-  tasks Task[]
+  id              String           @id @db.VarChar(26)
+  username        String           @db.VarChar(63)
+  password        String?          @db.VarChar(95)
+  tasks           Task[]
   taskCollections TaskCollection[]
-  createdAt DateTime @default(now())
-  deletedAt DateTime?
+  createdAt       DateTime         @default(now())
+  deletedAt       DateTime?
 }
