@@ -1,6 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import dayjs from 'dayjs';
 import { ulid } from 'ulid';
+import { KeycloakUserService } from '@/keycloak-user/keycloak-user.service';
 import { PrismaService } from '@/persistence/prisma.service';
 import { CreateUserResponseDto } from '@/user/dto/create-user-response.dto';
 import { UserDto } from '@/user/dto/user.dto';
@@ -9,7 +10,10 @@ import { User } from '@generated/prisma';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly keycloakUserService: KeycloakUserService,
+    private readonly prismaService: PrismaService,
+  ) {}
 
   async getUser(userId: string): Promise<UserDto> {
     const user = await this.prismaService.user.findFirst({
@@ -25,6 +29,10 @@ export class UserService {
     if (user === null) {
       throw new UserNotFoundException(userId);
     }
+
+    const {data} = await this.keycloakUserService.getData();
+
+    console.log(data[0]);
 
     return {
       createdAt: user.createdAt,

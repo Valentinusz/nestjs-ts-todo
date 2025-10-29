@@ -10,6 +10,7 @@ import {
   TokenValidation,
 } from 'nest-keycloak-connect';
 import { RequestLoggerInterceptor } from '@/interceptors/request-logger.interceptor';
+import { KeycloakUserModule } from '@/keycloak-user/keycloak-user.module';
 import { PrismaModule } from '@/persistence/prisma.module';
 import { TaskModule } from '@/task/task.module';
 import { TaskCollectionModule } from '@/task-collection/task-collection.module';
@@ -34,6 +35,7 @@ import { UserTaskCollectionModule } from '@/user-task-collection/user-task-colle
       policyEnforcement: PolicyEnforcementMode.PERMISSIVE,
       tokenValidation: TokenValidation.ONLINE,
     }),
+    KeycloakUserModule,
   ],
   providers: [
     { provide: APP_INTERCEPTOR, useClass: RequestLoggerInterceptor },
