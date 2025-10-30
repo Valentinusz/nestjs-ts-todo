@@ -6,7 +6,7 @@ import { PrismaService } from '@/persistence/prisma.service';
 import { CreateUserResponseDto } from '@/user/dto/create-user-response.dto';
 import { UserDto } from '@/user/dto/user.dto';
 import { UserNotFoundException } from '@/user/exception/user-not-found.exception';
-import { User } from '@generated/prisma';
+import { User } from '@generated/prisma/tasks';
 
 @Injectable()
 export class UserService {

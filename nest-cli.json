@@ -1,13 +1,21 @@
 {
-    "$schema": "https://json.schemastore.org/nest-cli",
-    "collection": "@nestjs/schematics",
-    "sourceRoot": "src",
-    "compilerOptions": {
-        "deleteOutDir": true,
-        "plugins": [
-            {
-                "name": "@nestjs/swagger"
-            }
-        ]
-    }
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": ".",
+  "entryFile": "src/main",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "assets": [
+      {
+        "include": "./generated/prisma/**/*.{js,d.ts}",
+        "outDir": "./dist",
+        "watchAssets": true
+      }
+    ],
+    "plugins": [
+      {
+        "name": "@nestjs/swagger"
+      }
+    ]
+  }
 }

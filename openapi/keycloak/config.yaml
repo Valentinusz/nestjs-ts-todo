@@ -1,6 +1,6 @@
 generatorName: typescript-axios
 inputSpec: https://www.keycloak.org/docs-api/latest/rest-api/openapi.json
-outputDir: ./generated/keycloak
+outputDir: ./generated/api/keycloak
 additionalProperties:
   supportsES6: true
   useSingleRequestParameter: true

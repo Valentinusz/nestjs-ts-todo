@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Configuration, UsersApi } from '@generated/keycloak';
+import { Configuration, UsersApi } from '@generated/api/keycloak';
 
 @Injectable()
 export class KeycloakUserService {
