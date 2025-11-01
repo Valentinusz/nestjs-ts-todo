@@ -4,12 +4,11 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import {
   AuthGuard,
   KeycloakConnectModule,
-  PolicyEnforcementMode,
   ResourceGuard,
   RoleGuard,
-  TokenValidation,
 } from 'nest-keycloak-connect';
 import { RequestLoggerInterceptor } from '@/interceptors/request-logger.interceptor';
+import { KeycloakConfigService } from '@/keycloak/keycloak-config.service';
 import { KeycloakUserModule } from '@/keycloak-user/keycloak-user.module';
 import { PrismaModule } from '@/persistence/prisma.module';
 import { TaskModule } from '@/task/task.module';
@@ -27,13 +26,9 @@ import { UserTaskCollectionModule } from '@/user-task-collection/user-task-colle
     UserModule,
     UserTaskModule,
     UserTaskCollectionModule,
-    KeycloakConnectModule.register({
-      authServerUrl: 'http://localhost:8080',
-      realm: 'tasks-realm',
-      clientId: 'tasks-backend',
-      secret: 'xvvm9isbmYdwJ3ci3j6jGPN600jRHqUn',
-      policyEnforcement: PolicyEnforcementMode.PERMISSIVE,
-      tokenValidation: TokenValidation.ONLINE,
+    KeycloakConnectModule.registerAsync({
+      useClass: KeycloakConfigService,
+      imports: [ConfigModule],
     }),
     KeycloakUserModule,
   ],

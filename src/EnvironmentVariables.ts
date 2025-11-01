@@ -1,0 +1,7 @@
+export interface EnvironmentVariables {
+  DATABASE_URL: string;
+  KEYCLOAK_TASKS_REALM_AUTH_SERVER_URL: string;
+  KEYCLOAK_TASKS_REALM_NAME: string;
+  KEYCLOAK_TASKS_REALM_CLIENT_ID: string;
+  KEYCLOAK_TASKS_REALM_CLIENT_SECRET: string;
+}

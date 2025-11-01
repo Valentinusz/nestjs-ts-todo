@@ -4,5 +4,5 @@ outputDir: ./generated/api/keycloak
 additionalProperties:
   supportsES6: true
   useSingleRequestParameter: true
-openapiNormalizer:
-  FILTER: "tag:Users"
+#openapiNormalizer:
+#  FILTER: "tag:Users"
