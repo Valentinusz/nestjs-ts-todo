@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
-import { EnvironmentVariables } from '@/EnvironmentVariables';
+import { EnvironmentVariables } from '@/environment-variables';
 import { Configuration, UsersApi } from '@generated/api/keycloak';
 
 @Injectable()

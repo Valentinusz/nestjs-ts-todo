@@ -6,7 +6,7 @@ import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from '@/app.module';
-import type { EnvironmentVariables } from '@/EnvironmentVariables';
+import type { EnvironmentVariables } from '@/environment-variables';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(

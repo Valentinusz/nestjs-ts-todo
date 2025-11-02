@@ -6,7 +6,7 @@ import {
   PolicyEnforcementMode,
   TokenValidation,
 } from 'nest-keycloak-connect';
-import { EnvironmentVariables } from '@/EnvironmentVariables';
+import { EnvironmentVariables } from '@/environment-variables';
 
 @Injectable()
 export class KeycloakConfigService implements KeycloakConnectOptionsFactory {
