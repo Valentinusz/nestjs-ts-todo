@@ -1,10 +1,12 @@
 import { env } from 'node:process';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from '@/app.module';
+import type { EnvironmentVariables } from '@/EnvironmentVariables';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -18,6 +20,17 @@ async function bootstrap() {
     }),
   );
 
+  const configService =
+    app.get<ConfigService<EnvironmentVariables>>(ConfigService);
+
+  const keycloakUrl = configService.get<string>(
+    'KEYCLOAK_TASKS_REALM_AUTH_SERVER_URL',
+  );
+  const realmName = configService.get<string>('KEYCLOAK_TASKS_REALM_NAME');
+  const baseUrl = `${keycloakUrl}/realms/${realmName}/protocol/openid-connect`;
+  const authorizationUrl = `${baseUrl}/auth`;
+  const tokenUrl = `${baseUrl}/token`;
+
   const config = new DocumentBuilder()
     .setTitle('Tasks API')
     .setDescription('API for managing tasks (things to do)')
@@ -26,10 +39,9 @@ async function bootstrap() {
       type: 'oauth2',
       flows: {
         implicit: {
-          authorizationUrl:
-            'http://localhost:8080/realms/tasks-realm/protocol/openid-connect/auth',
-          tokenUrl:
-            'http://localhost:8080/realms/tasks-realm/protocol/openid-connect/token',
+          authorizationUrl,
+          tokenUrl,
+          refreshUrl: tokenUrl,
           scopes: {},
         },
       },
@@ -37,15 +49,10 @@ async function bootstrap() {
     .build();
 
   const documentFactory = () =>
-    SwaggerModule.createDocument(
-      app,
-      config,
-      {
-        operationIdFactory: (_, methodKey, version) =>
-          `${methodKey}${version ? version.replace(/^./, version[0].toUpperCase()) : ''}`,
-      },
-
-    );
+    SwaggerModule.createDocument(app, config, {
+      operationIdFactory: (_, methodKey, version) =>
+        `${methodKey}${version ? version.replace(/^./, version[0].toUpperCase()) : ''}`,
+    });
 
   const swaggerPath = 'api';
   const jsonDocumentUrl = `${swaggerPath}-json`;
@@ -60,7 +67,7 @@ async function bootstrap() {
       urls: [{ name: 'JSON', url: jsonDocumentUrl }],
       oauth2RedirectUrl: 'http://localhost:3000/api/oauth2-redirect.html',
       initOAuth: {
-        clientId: 'tasks-backend-swagger',
+        clientId: configService.get('KEYCLOAK_TASKS_REALM_CLIENT_ID'),
       },
     },
   });
