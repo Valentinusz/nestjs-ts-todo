@@ -9,7 +9,7 @@ import {
 } from 'nest-keycloak-connect';
 import { RequestLoggerInterceptor } from '@/interceptors/request-logger.interceptor';
 import { KeycloakConfigService } from '@/keycloak/keycloak-config.service';
-import { KeycloakUserModule } from '@/keycloak-user/keycloak-user.module';
+import { KeycloakUserModule } from '@/keycloak/keycloak-user.module';
 import { PrismaModule } from '@/persistence/prisma.module';
 import { TaskModule } from '@/task/task.module';
 import { TaskCollectionModule } from '@/task-collection/task-collection.module';

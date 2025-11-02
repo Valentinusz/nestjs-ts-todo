@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import dayjs from 'dayjs';
 import { ulid } from 'ulid';
-import { KeycloakUserService } from '@/keycloak-user/keycloak-user.service';
+import { KeycloakUserService } from '@/keycloak/keycloak-user.service';
 import { PrismaService } from '@/persistence/prisma.service';
 import { CreateUserResponseDto } from '@/user/dto/create-user-response.dto';
 import { UserDto } from '@/user/dto/user.dto';
